@@ -1,0 +1,1 @@
+First next.js project. Basic routing
