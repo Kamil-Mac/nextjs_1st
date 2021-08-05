@@ -1,15 +1,14 @@
-import { useRouter } from "next/router";
-import { getEventById } from "../../dummy-data";
+// import { useRouter } from "next/router";
+import { getEventById, getFeaturedEvents } from "../../helpers/api-util";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
 
-const EventDetailPage = () => {
-  
-  const router = useRouter();
-  const eventId = router.query.id; //query shows dynamic id
-  const event = getEventById(eventId);
-
+const EventDetailPage = (props) => {
+  //it was for static data from dummy file, now get from firebase
+  // const router = useRouter();
+  // const eventId = router.query.id; //query shows dynamic id
+  const { event } = props;
 
   return !event ? (
     <p>No event found</p>
@@ -28,5 +27,27 @@ const EventDetailPage = () => {
     </>
   );
 };
+//dynamic ssg pages need getStatic Paths
+export async function getStaticProps(context) {
+  const eventId = context.params.id; //id from [id] page
+  const event = await getEventById(eventId);
+  return {
+    props: {
+      event,
+    },
+    revalidate: 1800,
+  };
+}
+
+export async function getStaticPaths() {
+  const events = await getFeaturedEvents();
+
+  const paths = events.map((event) => ({ params: { id: event.id } })); //create array of objects
+
+  return {
+    paths: paths,
+    fallback: false, //'blocking'
+  };
+}
 
 export default EventDetailPage;
