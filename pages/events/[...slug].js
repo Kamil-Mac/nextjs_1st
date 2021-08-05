@@ -30,7 +30,7 @@ const FilteredEventsPage = (props) => {
 
   const numYear = +filteredData[0];
   const numMonth = +filteredData[1];
-  console.log(loadedEvents);
+  //console.log(loadedEvents);
 
   if (!loadedEvents) {
     return <p className="center">Loading data...</p>;
@@ -43,8 +43,6 @@ const FilteredEventsPage = (props) => {
       eventDate.getMonth() === numMonth - 1
     );
   });
-
-
 
   if (
     isNaN(numMonth) ||
