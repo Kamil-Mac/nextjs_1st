@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Head from "next/head";
 import EventList from "../../components/events/event-list";
 //import { getFilteredEvents } from "../../helpers/api-util";
 
@@ -12,9 +13,9 @@ const FilteredEventsPage = (props) => {
   const filteredData = router.query.slug;
 
   const { data, error } = useSWR(
-    'https://nextjs-87feb-default-rtdb.firebaseio.com/events.json'
+    "https://nextjs-87feb-default-rtdb.firebaseio.com/events.json"
   );
- 
+
   useEffect(() => {
     if (data) {
       const events = [];
@@ -32,8 +33,20 @@ const FilteredEventsPage = (props) => {
   const numMonth = +filteredData[1];
   //console.log(loadedEvents);
 
+  const pageHeadData = (
+    <Head>
+      <title>Name of project</title>
+      <meta name="description" content={`Date: ${numMonth}/${numYear}`} />
+    </Head>
+  );
+
   if (!loadedEvents) {
-    return <p className="center">Loading data...</p>;
+    return (
+      <>
+        {pageHeadData}
+        <p className="center">Loading data...</p>
+      </>
+    );
   }
 
   const filteredItems = loadedEvents.filter((event) => {
@@ -53,7 +66,11 @@ const FilteredEventsPage = (props) => {
     numMonth < 1 ||
     error
   ) {
-    return <p className="center">Adjust values...</p>;
+    return (
+      <>
+        {pageHeadData} <p className="center">Adjust values...</p>
+      </>
+    );
   }
 
   // if (hasError) {
@@ -61,9 +78,13 @@ const FilteredEventsPage = (props) => {
   // }
 
   return !filteredItems || filteredItems.length === 0 ? (
-    <p className="center">No events found...</p>
+    <>
+      {pageHeadData}
+      <p className="center">No events found...</p>
+    </>
   ) : (
     <>
+      {pageHeadData}
       <EventList items={filteredItems} />
     </>
   );
