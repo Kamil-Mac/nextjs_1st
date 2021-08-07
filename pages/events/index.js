@@ -27,7 +27,7 @@ const EventsPage = (props) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const events = await getAllEvents();
   return {
     props: {
@@ -35,6 +35,6 @@ export async function getStaticProps() {
     },
     revalidate: 3600,
   };
-}
+};
 
 export default EventsPage;

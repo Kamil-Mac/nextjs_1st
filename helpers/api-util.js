@@ -1,4 +1,4 @@
-export async function getAllEvents() {
+export const getAllEvents = async () => {
   const response = await fetch(
     "https://nextjs-87feb-default-rtdb.firebaseio.com/events.json"
   );
@@ -15,17 +15,17 @@ export async function getAllEvents() {
   return events;
 }
 
-export async function getFeaturedEvents() {
+export const getFeaturedEvents = async () => {
   const allEvents = await getAllEvents();
   return allEvents.filter((event) => event.isFeatured);
 }
 
-export async function getEventById(id) {
+export const getEventById = async (id) => {
   const allEvents = await getAllEvents();
   return allEvents.find((event) => event.id === id);
 }
 
-export async function getFilteredEvents(dateFilter) {
+export const getFilteredEvents = async (dateFilter) => {
     const { year, month } = dateFilter;
     const allEvents = await getAllEvents();
     

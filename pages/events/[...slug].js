@@ -90,7 +90,7 @@ const FilteredEventsPage = (props) => {
   );
 };
 
-// export async function getServerSideProps(context) {
+// export const getServerSideProps =  async (context) => {
 //   const { params } = context;
 //   const filteredData = params.slug;
 //   const numYear = +filteredData[0];

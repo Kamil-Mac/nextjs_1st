@@ -35,7 +35,7 @@ const EventDetailPage = (props) => {
   );
 };
 //dynamic ssg pages need getStatic Paths
-export async function getStaticProps(context) {
+export const getStaticProps = async (context) => {
   const eventId = context.params.id; //id from [id] page
   const event = await getEventById(eventId);
   return {
@@ -46,7 +46,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const events = await getFeaturedEvents();
 
   const paths = events.map((event) => ({ params: { id: event.id } })); //create array of objects

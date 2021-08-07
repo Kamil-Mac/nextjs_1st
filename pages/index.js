@@ -20,7 +20,7 @@ const HomePage = (props) => {
   );
 };
 
-export async function getStaticProps(context) {
+export const getStaticProps = async (context) => {
   const featuredEvents = await getFeaturedEvents();
 
   return {
