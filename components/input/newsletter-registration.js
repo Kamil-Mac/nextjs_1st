@@ -5,8 +5,7 @@ import styles from "./newsletter-registration.module.css";
 const NewsletterRegistration = () => {
   const [emailAddress, setEmailAddress] = useState(); //I can use also useRef - uncontrolled
 
-  const notificationCtx = useContext(NotificationContext);
-  const { showNotification, hideNotification } = notificationCtx;
+  const { showNotification, hideNotification } = useContext(NotificationContext);
 
   const emailHandler = (e) => {
     setEmailAddress(e.target.value);

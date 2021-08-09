@@ -4,16 +4,14 @@ import MainHeader from "./main-header";
 import NotificationContext from "../../store/notification-context";
 
 const Layout = (props) => {
-  const notificationCtx = useContext(NotificationContext);
-  const { notification } = notificationCtx;
-  const { title, message, status } = notification;
+  const { notification }  = useContext(NotificationContext);
 
   return (
     <>
       <MainHeader />
       <main>{props.children}</main>
       {notification && (
-        <Notification title={title} message={message} status={status} />
+        <Notification title={notification.title} message={notification.message} status={notification.status} />
       )}
     </>
   );

@@ -2,15 +2,16 @@ import {
   connectDB,
   insertDocument,
   getAllDocuments,
-} from "../../helpers/db-util";
+} from "../../../helpers/db-util";
 
-const handler = (req, res) => {
+const handler = async (req, res) => {
   const eventId = req.query.eventId;
 
   let client;
+  let result;
 
   try {
-    client = connectDB();
+    client = await connectDB();
   } catch (error) {
     res.status(500).json({ message: "Connecting to the db failed" });
     return;
@@ -38,25 +39,20 @@ const handler = (req, res) => {
       eventId,
     };
 
-    let result;
-
     try {
       result = await insertDocument(client, "comments", newComment);
       newComment._id = result.insertedId;
       res
         .status(201)
         .json({ message: "Success, signed up!", comment: newComment });
-
     } catch (error) {
       res.status(500).json({ message: "Inserting data failed" });
     }
   }
 
   if (req.method === "GET") {
-    let documents;
-
     try {
-      documents = getAllDocuments(client, "comments", { _id: -1 });
+      const documents = await getAllDocuments(client, "comments", { _id: -1 });
       res.status(200).json({ comments: documents });
     } catch (error) {
       res.status(500).json({ message: "Inserting data failed" });

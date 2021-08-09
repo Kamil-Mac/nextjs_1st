@@ -20,7 +20,7 @@ const handler = async (req, res) => {
     }
 
     try {
-      await insertDocument(client, 'emails', { email });
+      insertDocument(client, 'emails', { email });
       client.close();
     } catch (error) {
       res.status(500).json({message: 'Inserting data failed'})
